@@ -66,17 +66,21 @@ export const CommentsButton = () => {
     onActive: (evt, ctx: { originY: number }) => {
       let diff = evt.y - ctx.originY;
 
-      // console.warn(diff);
-
       if (scrollOffset.value < 1 && evt.velocityY > 0) {
-        diff *= 1.5;
+        diff *= 1;
 
         bottom.value = bottom.value - diff;
       } else {
-        // scrollOffset.value = (scrollOffset.value + (-1 * evt.translationY / 10)) % contentHeight.value;
-        // scrollOffset.value =
-        //  (scrollOffset.value - diff) % contentHeight.value;
-        scrollOffset.value = (-1 * evt.translationY) % contentHeight.value;
+        let newVal = scrollOffset.value + (-1 * evt.velocityY) / 40;
+
+        if (newVal < 0) {
+          newVal = 0;
+        } else if (newVal > contentHeight.value) {
+          newVal = contentHeight.value;
+        }
+
+        scrollOffset.value = newVal;
+
         return;
       }
     },
@@ -88,39 +92,11 @@ export const CommentsButton = () => {
     },
   });
 
-  // const scrollHandler = useAnimatedScrollHandler({
-  //   onScroll: (event) => {
-  //     if (animLock.value === 1) {
-  //       return;
-  //     }
-
-  //     if (event.contentOffset.y <= 0) {
-  //       bottom.value = bottom.value + event.contentOffset.y / 2;
-  //       return;
-  //     }
-
-  //     scrollOffset.value = event.contentOffset.y;
-  //   },
-  //   onEndDrag: (evt) => {
-  //     if (animLock.value === 1) {
-  //       return;
-  //     }
-
-  //     handleDragEndEvent();
-  //   },
-  // });
-
   const animStyle = useAnimatedStyle(() => {
     return {
       bottom: bottom.value,
     };
   });
-
-  // const animProps = useAnimatedProps(() => {
-  //   return {
-  //     pointerEvents: onEndDragged.value === 1 ? 'box-only' : 'box-none',
-  //   };
-  // });
 
   useDerivedValue(() => {
     scrollTo(animRef, 0, scrollOffset.value, false);
