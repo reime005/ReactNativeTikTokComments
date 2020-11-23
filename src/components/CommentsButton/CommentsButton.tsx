@@ -14,6 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { HomeIcon } from '../SVG/HomeIcon';
+import { CloseIcon } from '../SVG/CloseIcon';
 
 const { width, height } = RN.Dimensions.get('screen');
 
@@ -71,7 +72,7 @@ export const CommentsButton = () => {
 
         bottom.value = bottom.value - diff;
       } else {
-        let newVal = scrollOffset.value + (-1 * evt.velocityY) / 40;
+        let newVal = scrollOffset.value + (-1 * evt.velocityY) / 30;
 
         if (newVal < 0) {
           newVal = 0;
@@ -119,20 +120,54 @@ export const CommentsButton = () => {
 
       <Animated.View style={[styles.box, animStyle]}>
         <PanGestureHandler onGestureEvent={gestureHandler}>
-          <Animated.ScrollView
-            ref={animRef}
-            onContentSizeChange={(w, h) => (contentHeight.value = h)}
-            scrollEnabled={false}
-            // animatedProps={animProps}
-            scrollEventThrottle={16}
-            // alwaysBounceVertical={true}
-            // bounces={false}
-            // onScroll={scrollHandler}
-          >
-            {Array.from({ length: 50 }).map((_, i) => (
-              <RN.Text>test{i}</RN.Text>
-            ))}
-          </Animated.ScrollView>
+          <Animated.View>
+            <RN.View
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'row',
+                paddingHorizontal: 8,
+                height: 30,
+                marginBottom: 8,
+              }}>
+              <RN.View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <RN.Text
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: 14,
+                    lineHeight: 14,
+                    color: 'white',
+                  }}>
+                  253 comments
+                </RN.Text>
+              </RN.View>
+
+              <RN.TouchableOpacity onPress={closeAnim} activeOpacity={0.8}>
+                <CloseIcon width={22} height={22} />
+              </RN.TouchableOpacity>
+            </RN.View>
+
+            <Animated.ScrollView
+              ref={animRef}
+              onContentSizeChange={(w, h) => (contentHeight.value = h)}
+              scrollEnabled={false}
+              // animatedProps={animProps}
+              scrollEventThrottle={16}
+              // alwaysBounceVertical={true}
+              // bounces={false}
+              // onScroll={scrollHandler}
+            >
+              {Array.from({ length: 250 }).map((_, i) => (
+                <RN.Text>test{i}</RN.Text>
+              ))}
+            </Animated.ScrollView>
+          </Animated.View>
         </PanGestureHandler>
       </Animated.View>
     </>
@@ -147,7 +182,7 @@ const styles = RN.StyleSheet.create({
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
     padding: 8,
-    backgroundColor: 'grey',
+    backgroundColor: '#303030',
     height: height * 0.65,
     zIndex: 1000,
   },
