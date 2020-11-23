@@ -33,13 +33,12 @@ export const CommentsButton = () => {
 
   const bottom = useSharedValue(BOTTOM_MIN);
 
+  const contentHeight = useSharedValue(0);
   const scrollOffset = useSharedValue(0);
   const onEndDragged = useSharedValue(0);
   const animLock = useSharedValue(0);
 
   const closeAnim = () => {
-    console.warn('close');
-
     animLock.value = 1;
     bottom.value = withSpring(BOTTOM_MIN, springConfig, () => {
       setIsOpen(false);
@@ -48,8 +47,6 @@ export const CommentsButton = () => {
   };
 
   const openAnim = () => {
-    console.warn('open');
-
     animLock.value = 1;
     bottom.value = withSpring(BOTTOM_MAX, springConfig, () => {
       setIsOpen(true);
@@ -66,66 +63,52 @@ export const CommentsButton = () => {
   };
 
   const gestureHandler = useAnimatedGestureHandler({
-    onActive: (evt, ctx) => {
-      if (evt.velocityY < 1) {
-        console.warn(evt.translationY);
+    onActive: (evt, ctx: { originY: number }) => {
+      let diff = evt.y - ctx.originY;
 
-        scrollOffset.value = + evt.y;
+      // console.warn(diff);
+
+      if (scrollOffset.value < 1 && evt.velocityY > 0) {
+        diff *= 1.5;
+
+        bottom.value = bottom.value - diff;
+      } else {
+        // scrollOffset.value = (scrollOffset.value + (-1 * evt.translationY / 10)) % contentHeight.value;
+        // scrollOffset.value =
+        //  (scrollOffset.value - diff) % contentHeight.value;
+        scrollOffset.value = (-1 * evt.translationY) % contentHeight.value;
         return;
       }
-
-      bottom.value = bottom.value - evt.y;
     },
     onEnd: (evt, ctx) => {
       handleDragEndEvent();
     },
     onStart: (evt, ctx) => {
-      // console.warn('f');
+      ctx.originY = evt.y;
     },
   });
 
-  // const scrollHandler = useAnimatedScrollHandler((e) => {
-  //   console.warn(e);
+  // const scrollHandler = useAnimatedScrollHandler({
+  //   onScroll: (event) => {
+  //     if (animLock.value === 1) {
+  //       return;
+  //     }
 
+  //     if (event.contentOffset.y <= 0) {
+  //       bottom.value = bottom.value + event.contentOffset.y / 2;
+  //       return;
+  //     }
+
+  //     scrollOffset.value = event.contentOffset.y;
+  //   },
+  //   onEndDrag: (evt) => {
+  //     if (animLock.value === 1) {
+  //       return;
+  //     }
+
+  //     handleDragEndEvent();
+  //   },
   // });
-
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      if (animLock.value === 1) {
-        return;
-      }
-
-      if (event.contentOffset.y <= 0) {
-        console.warn('l');
-
-        bottom.value = bottom.value + event.contentOffset.y / 2;
-        return;
-      }
-
-      console.warn(event.contentOffset.y);
-
-      scrollOffset.value = event.contentOffset.y;
-    },
-    onEndDrag: (evt) => {
-      if (animLock.value === 1) {
-        return;
-      }
-
-      console.warn('end');
-
-      handleDragEndEvent();
-    },
-    // onMomentumBegin: () => {
-    //   console.warn('mom');
-
-    // }
-    // onBeginDrag: (event, ctx) => {
-    //   onEndDragged.value = 1;
-    // },
-    // onEndDrag: (event) => {
-    //   onEndDragged.value = 0;
-    // },
-  });
 
   const animStyle = useAnimatedStyle(() => {
     return {
@@ -133,11 +116,11 @@ export const CommentsButton = () => {
     };
   });
 
-  const animProps = useAnimatedProps(() => {
-    return {
-      pointerEvents: onEndDragged.value === 1 ? 'box-only' : 'box-none',
-    };
-  });
+  // const animProps = useAnimatedProps(() => {
+  //   return {
+  //     pointerEvents: onEndDragged.value === 1 ? 'box-only' : 'box-none',
+  //   };
+  // });
 
   useDerivedValue(() => {
     scrollTo(animRef, 0, scrollOffset.value, false);
@@ -162,14 +145,16 @@ export const CommentsButton = () => {
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.ScrollView
             ref={animRef}
+            onContentSizeChange={(w, h) => (contentHeight.value = h)}
             scrollEnabled={false}
-            animatedProps={animProps}
-            scrollEventThrottle={64}
+            // animatedProps={animProps}
+            scrollEventThrottle={16}
             // alwaysBounceVertical={true}
             // bounces={false}
-            onScroll={scrollHandler}>
-            {Array.from({ length: 50 }).map(() => (
-              <RN.Text>test</RN.Text>
+            // onScroll={scrollHandler}
+          >
+            {Array.from({ length: 50 }).map((_, i) => (
+              <RN.Text>test{i}</RN.Text>
             ))}
           </Animated.ScrollView>
         </PanGestureHandler>
