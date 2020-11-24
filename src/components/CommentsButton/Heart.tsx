@@ -9,23 +9,30 @@ import { HeartFilledIcon } from '../SVG/HeartFilledIcon';
 
 export const Heart = () => {
   const ref = React.useRef<TransitioningView | null>(null);
+  const [toggled, setToggled] = React.useState(false);
+
+  const toggle = () => setToggled(!toggled);
 
   const onPress = () => {
+    toggle();
     ref.current?.animateNextTransition();
   };
 
   return (
     <Transitioning.View ref={ref} transition={transition}>
-      <HeartEmptyIcon onPress={onPress} />
-      <HeartFilledIcon onPress={onPress} />
+      {!toggled ? (
+        <HeartEmptyIcon onPress={onPress} />
+      ) : (
+        <HeartFilledIcon onPress={onPress} />
+      )}
     </Transitioning.View>
   );
 };
 
 const transition = (
   <Transition.Together>
-    <Transition.Out type="fade" durationMs={150} />
+    <Transition.Out type="scale" durationMs={100} />
     <Transition.Change interpolation="easeInOut" />
-    <Transition.In type="fade" durationMs={150} delayMs={150} />
+    <Transition.In type="scale" durationMs={100} delayMs={50} />
   </Transition.Together>
 );
