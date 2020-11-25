@@ -4,10 +4,14 @@ import {
   Transitioning,
   TransitioningView,
 } from 'react-native-reanimated';
-import { HeartEmptyIcon } from '../SVG/HeartEmptyIcon';
-import { HeartFilledIcon } from '../SVG/HeartFilledIcon';
+import { SVGWrapperProps } from '../SVG/svgProps';
 
-export const Heart = () => {
+interface Props {
+  First: React.ElementType<SVGWrapperProps>;
+  Second: React.ElementType<SVGWrapperProps>;
+}
+
+export const ToggleIcon = ({ First, Second }: Props) => {
   const ref = React.useRef<TransitioningView | null>(null);
   const [toggled, setToggled] = React.useState(false);
 
@@ -20,11 +24,7 @@ export const Heart = () => {
 
   return (
     <Transitioning.View ref={ref} transition={transition}>
-      {!toggled ? (
-        <HeartEmptyIcon onPress={onPress} />
-      ) : (
-        <HeartFilledIcon onPress={onPress} />
-      )}
+      {!toggled ? <First onPress={onPress} /> : <Second onPress={onPress} />}
     </Transitioning.View>
   );
 };

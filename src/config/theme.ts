@@ -8,6 +8,7 @@ declare module 'styled-components' {
     focusedIconColor: string;
     unFocusedIconColor: string;
     mainFont: string;
+    secondaryFont: string;
   }
 }
 
@@ -18,6 +19,7 @@ export const lightTheme: DefaultTheme = {
   secondaryColor: '#666',
   searchBackgroundColor: '#fafafa',
   mainFont: '#090909',
+  secondaryFont: '#9d9d9f',
 };
 
 export const darkTheme: DefaultTheme = {
@@ -26,5 +28,6 @@ export const darkTheme: DefaultTheme = {
   unFocusedIconColor: '#cccccc',
   secondaryColor: '#cacaca',
   searchBackgroundColor: '#707070',
-  mainFont: '#090909',
+  mainFont: '#efefef',
+  secondaryFont: '#9d9d9f',
 };

@@ -1,5 +1,6 @@
 import { Dimensions } from 'react-native';
 import Animated, {
+  runOnJS,
   scrollTo,
   useAnimatedGestureHandler,
   useAnimatedRef,
@@ -10,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useCommentsButton } from './useCommentsButton';
 
-const {  height } = Dimensions.get('screen');
+const { height } = Dimensions.get('screen');
 
 const springConfig: Animated.WithSpringConfig = {
   velocity: 8,
@@ -32,24 +33,28 @@ export const useCommentsSection = () => {
   const scrollOffset = useSharedValue(0);
 
   const closeAnim = () => {
+    'worklet';
     bottom.value = withSpring(BOTTOM_MIN, springConfig, () => {
-      setIsOpen(false);
+      runOnJS(setIsOpen)(false);
     });
   };
 
   const openAnim = () => {
+    'worklet';
     bottom.value = withSpring(BOTTOM_MAX, springConfig, () => {
-      setIsOpen(true);
+      runOnJS(setIsOpen)(true);
     });
   };
 
-  const handleDragEndEvent = () => {
+  function handleDragEndEvent() {
+    'worklet';
+
     if (bottom.value > BOTTOM_MAX - 250) {
       openAnim();
     } else {
       closeAnim();
     }
-  };
+  }
 
   const gestureHandler = useAnimatedGestureHandler({
     onActive: (evt, ctx: { originY: number }) => {
@@ -73,7 +78,7 @@ export const useCommentsSection = () => {
         return;
       }
     },
-    onEnd: () => {
+    onEnd: function () {
       handleDragEndEvent();
     },
     onStart: (evt, ctx) => {

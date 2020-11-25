@@ -9,7 +9,9 @@ import { useCommentsSection } from './useCommentsSection';
 import { ChevronIcon } from '../SVG/ChevronIcon';
 import { HeartFilledIcon } from '../SVG/HeartFilledIcon';
 import { HeartEmptyIcon } from '../SVG/HeartEmptyIcon';
-import { Heart } from './Heart';
+import { ToggleIcon } from './ToggleIcon';
+import { CommentsItem } from './CommentsItem';
+import { Spinner } from '../Spinner/Spinner';
 const { width, height } = RN.Dimensions.get('screen');
 
 export const CommentsSection = () => {
@@ -37,10 +39,9 @@ export const CommentsSection = () => {
 
           toggleComments();
         }}
-
       />
 
-      <Heart />
+        <Spinner />
 
       <Animated.View style={[styles.box, animStyle]}>
         <PanGestureHandler onGestureEvent={gestureHandler}>
@@ -87,7 +88,7 @@ export const CommentsSection = () => {
               scrollEnabled={false}
               scrollEventThrottle={16}>
               {Array.from({ length: 250 }).map((_, i) => (
-                <RN.Text>test{i}</RN.Text>
+                <CommentsItem key={i} />
               ))}
             </Animated.ScrollView>
           </Animated.View>

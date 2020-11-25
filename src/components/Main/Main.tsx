@@ -13,7 +13,7 @@ export const Main = () => {
 
   return (
     <NavigationContainer>
-      <ThemeProvider theme={colorScheme === 'dark' ? darkTheme : lightTheme}>
+      <ThemeProvider theme={darkTheme}>
         <SafeAreaProvider>
           <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
