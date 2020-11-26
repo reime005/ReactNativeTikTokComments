@@ -16,7 +16,7 @@ const Circle = Animated.createAnimatedComponent(C);
 const radius = 10;
 
 const DISTANCE = 10;
-const SPEED_FACTOR = 0.07;
+const SPEED_FACTOR = 0.05;
 
 const MAX_SCALE = 1;
 const MIN_SCALE = 0.5;
@@ -58,8 +58,8 @@ export const Spinner = (props: Props) => {
 
     firstRadius.value = interpolate(
       s,
-      [-1, 0, 1],
-      [radius * 0.8, radius * 1.1, radius * 0.8],
+      [-1, -0.7, 0, 0.7, 1],
+      [radius * 0.8, radius * 0.9, radius * 1.1, radius * 0.9, radius * 0.8],
     );
 
     return {
@@ -79,8 +79,8 @@ export const Spinner = (props: Props) => {
 
     secondRadius.value = interpolate(
       s,
-      [-1, 0, 1],
-      [radius * 1.1, radius * 0.6, radius * 1.1],
+      [-1, -0.5, 0, 0.5, 1],
+      [radius * 0.8, radius * 0.8, radius * 0.5, radius * 0.8, radius * 0.8],
     );
 
     return {

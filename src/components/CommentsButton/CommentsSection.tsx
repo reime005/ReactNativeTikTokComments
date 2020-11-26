@@ -14,6 +14,8 @@ import { CommentsItem } from './CommentsItem';
 import { Spinner } from '../Spinner/Spinner';
 const { width, height } = RN.Dimensions.get('screen');
 
+const FlatList = Animated.createAnimatedComponent(RN.FlatList);
+
 export const CommentsSection = () => {
   const {
     closeAnim,
@@ -40,8 +42,6 @@ export const CommentsSection = () => {
           toggleComments();
         }}
       />
-
-        <Spinner />
 
       <Animated.View style={[styles.box, animStyle]}>
         <PanGestureHandler onGestureEvent={gestureHandler}>
@@ -82,15 +82,15 @@ export const CommentsSection = () => {
               />
             </RN.View>
 
-            <Animated.ScrollView
+            <FlatList
               ref={animRef}
+              data={Array.from({ length: 20 }).map((_, i) => i)}
+              keyExtractor={(item) => item}
+              renderItem={(item) => <CommentsItem key={item.index} />}
               onContentSizeChange={(_, h) => (contentHeight.value = h)}
               scrollEnabled={false}
-              scrollEventThrottle={16}>
-              {Array.from({ length: 250 }).map((_, i) => (
-                <CommentsItem key={i} />
-              ))}
-            </Animated.ScrollView>
+              scrollEventThrottle={16}
+            />
           </Animated.View>
         </PanGestureHandler>
       </Animated.View>

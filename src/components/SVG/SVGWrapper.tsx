@@ -31,8 +31,6 @@ export const SVGWrapper = (props: SVGWrapperProps) => {
             }
           : {}),
       },
-      width: transformedProps.width,
-      height: transformedProps.height,
       ...outerStyle,
     },
     ...props,

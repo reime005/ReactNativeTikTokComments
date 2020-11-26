@@ -2,6 +2,7 @@ import React from 'react';
 import { HeartEmptyIcon } from '../SVG/HeartEmptyIcon';
 import { HeartFilledIcon } from '../SVG/HeartFilledIcon';
 import * as S from './Comments.styled';
+import { CommentsReply } from './CommentsReply';
 import { ToggleIcon } from './ToggleIcon';
 
 interface Props {}
@@ -26,6 +27,8 @@ export const CommentsItem = (props: Props) => {
             &nbsp;12h
           </S.StyledCommentsItemTextSecondary>
         </S.StyledCommentsItemTextPrimary>
+
+        <CommentsReply />
       </S.StyledCommentsItemTextContainer>
 
       <S.StyledCommentsItemEdgeContainer style={{ alignItems: 'center' }}>

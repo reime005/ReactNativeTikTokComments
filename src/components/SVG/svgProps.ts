@@ -5,6 +5,7 @@ interface DefaultSVGWrapperProps {
   height?: number;
   scale?: number;
   fill?: string;
+  color?: string;
   SVG?: React.ElementType<DefaultSVGWrapperProps>;
 }
 
@@ -13,6 +14,7 @@ const defaultSVGProps: DefaultSVGWrapperProps = {
   height: 24,
   scale: 1,
   fill: 'grey',
+  color: '#000',
   SVG: undefined,
 };
 
