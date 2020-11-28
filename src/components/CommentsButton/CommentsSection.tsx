@@ -12,6 +12,7 @@ import { HeartEmptyIcon } from '../SVG/HeartEmptyIcon';
 import { ToggleIcon } from './ToggleIcon';
 import { CommentsItem } from './CommentsItem';
 import { Spinner } from '../Spinner/Spinner';
+import { SpeakerIcon } from '../SVG/SpeakerIcon';
 const { width, height } = RN.Dimensions.get('screen');
 
 const FlatList = Animated.createAnimatedComponent(RN.FlatList);
@@ -30,8 +31,7 @@ export const CommentsSection = () => {
 
   return (
     <>
-      <ChevronIcon
-        rotateByDeg={-90}
+      <SpeakerIcon
         onPress={() => {
           if (isOpen) {
             closeAnim();

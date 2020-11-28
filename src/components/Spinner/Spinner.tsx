@@ -120,7 +120,7 @@ export const Spinner = (props: Props) => {
       <Circle
         cy={radius + 2}
         r={radius}
-        fill={'rgb(235, 91, 93, .5)'}
+        fill={'rgba(235, 91, 93, .5)'}
         {...props}
         animatedProps={secondProps}
       />

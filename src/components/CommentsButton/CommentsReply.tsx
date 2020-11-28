@@ -17,7 +17,7 @@ interface Props {}
 export const CommentsReply = () => {
   const ref = React.useRef<TransitioningView | null>(null);
 
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const [open, setOpen] = React.useState(false);
   const toggleOpen = () => setOpen(!open);
@@ -39,8 +39,8 @@ export const CommentsReply = () => {
 
   return (
     <Transitioning.View ref={ref} transition={transition}>
-       {!open && <ViewReply onPress={onPress} isLoading={isLoading} />}
-       {open && <ReplyItems onPress={onPress} isLoading={isLoading} />}
+      {!open && <ViewReply onPress={onPress} isLoading={isLoading} />}
+      {open && <ReplyItems onPress={onPress} isLoading={isLoading} />}
     </Transitioning.View>
   );
 };
@@ -54,22 +54,30 @@ interface ViewReplyProps extends ClickProps {
 }
 
 const ReplyItems = (props: ViewReplyProps) => {
-  return <View style={{ alignItems: 'center', justifyContent: 'flex-end', width: '100%', height: 250 }}>
-
-
-<S.StyledCommentsReplyHeader style={{ width: '100%' }} activeOpacity={0.9} onPress={props.onPress}>
-      <StyledCommentsItemTextSecondary >
-        View replies (42) <ChevronIcon rotateByDeg={90} />
-      </StyledCommentsItemTextSecondary>
-    </S.StyledCommentsReplyHeader>
-
-  </View>
-}
+  return (
+    <View
+      style={{
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        width: '100%',
+        height: 250,
+      }}>
+      <S.StyledCommentsReplyHeader
+        style={{ width: '100%' }}
+        activeOpacity={0.9}
+        onPress={props.onPress}>
+        <StyledCommentsItemTextSecondary>
+          View replies (42) <ChevronIcon rotateByDeg={90} />
+        </StyledCommentsItemTextSecondary>
+      </S.StyledCommentsReplyHeader>
+    </View>
+  );
+};
 
 const ViewReply = (props: ViewReplyProps) => {
   return (
     <S.StyledCommentsReplyHeader activeOpacity={0.9} onPress={props.onPress}>
-      <StyledCommentsItemTextSecondary >
+      <StyledCommentsItemTextSecondary>
         View replies (42) <ChevronIcon rotateByDeg={-90} />
       </StyledCommentsItemTextSecondary>
 
@@ -82,6 +90,6 @@ const transition = (
   <Transition.Together>
     <Transition.Out type="scale" durationMs={100} />
     <Transition.Change interpolation="linear" />
-    <Transition.In type="slide-bottom" durationMs={100} delayMs={50} />
+    <Transition.In type="fade" durationMs={100} delayMs={50} />
   </Transition.Together>
 );
