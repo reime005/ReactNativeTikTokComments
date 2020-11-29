@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from '../../config/theme';
 import { CommentsSection } from '../CommentsButton/CommentsSection';
 import { Test } from './Test';
+import { Spinner } from '../Spinner/Spinner';
 
 export const Main = () => {
   const colorScheme = useColorScheme();
@@ -18,8 +19,9 @@ export const Main = () => {
         <SafeAreaProvider>
           <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center', padding: 16 }}>
-              <CommentsSection />
+              {/* <CommentsSection /> */}
               {/* <Test /> */}
+              <Spinner />
             </View>
           </SafeAreaView>
         </SafeAreaProvider>
