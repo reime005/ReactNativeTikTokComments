@@ -20,8 +20,8 @@ export const Main = () => {
           <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center', padding: 16 }}>
               {/* <CommentsSection /> */}
-              {/* <Test /> */}
-              <Spinner />
+              <Test />
+              {/* <Spinner /> */}
             </View>
           </SafeAreaView>
         </SafeAreaProvider>
