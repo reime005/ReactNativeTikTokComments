@@ -8,19 +8,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import Svg, {
-  Circle as C,
-  ClipPath,
-  Defs,
-  EMaskUnits,
-  G,
-  LinearGradient,
-  Mask,
-  RadialGradient,
-  Rect,
-  Stop,
-  Use,
-} from 'react-native-svg';
+import Svg, { Circle as C } from 'react-native-svg';
 import { useTheme } from 'styled-components';
 
 const Circle = Animated.createAnimatedComponent(C);
@@ -115,112 +103,27 @@ export const Spinner = (props: Props) => {
   }, [req]);
 
   return (
-    <Svg width="100%" height="100%" viewBox="0 0 48 24">
-      <Defs>
-        {/* <LinearGradient
-      id="Gradient"
-      gradientUnits="userSpaceOnUse"
-      x1="0"
-      y1="0"
-      x2="48"
-      y2="0"
-    >
-      <Stop offset="0" stopColor="white" stopOpacity="0" />
-      <Stop offset="1" stopColor="white" stopOpacity="1" />
-    </LinearGradient>
-
-        <Mask
-          id="Mask"
-          maskUnits="userSpaceOnUse"
-          x="0"
-          y="0"
-          width="48"
-          height="24">
-          <Rect x="0" y="0" width={48} height={24} fill="url(#Gradient)" />
-        </Mask> */}
-<RadialGradient
-      id="grad"
-      cx="50%"
-      cy="50%"
-      rx="50%"
-      ry="50%"
-      fx="50%"
-      fy="50%"
-      gradientUnits="userSpaceOnUse"
-    >
-      <Stop offset="0%" stopColor="#ff0" stopOpacity="1" />
-      <Stop offset="100%" stopColor="red" stopOpacity="1" />
-    </RadialGradient>
-        <ClipPath id="clip">
-          {/* <G scale="0.9" x="10"> */}
-            <Circle
-              cy={radius + 2}
-              r={radius}
-              {...props}
-              animatedProps={secondProps}
-            />
-          {/* </G> */}
-        </ClipPath>
-      </Defs>
-
-      <Rect x="0" y="0" width="48" height="24" fill="#000" />
+    <Svg
+      height={24}
+      width={48}
+      {...props}
+      viewBox="0 0 48 24"
+      style={{ backgroundColor: 'transparent', alignSelf: 'center' }}>
       <Circle
         cy={radius + 2}
         r={radius}
-        // fill={'red'}
-        fill="url(#grad)"
-        clipPath="url(#clip)"
+        fill={'rgba(91, 232, 235, .5)'}
         {...props}
         animatedProps={firstProps}
       />
 
-      {/* <Use href="#Circle" fill="yellow" mask="url(#Mask)" />
-      <Use href="#Circle" fill="none" stroke="#000" strokeWidth={0} /> */}
+      <Circle
+        cy={radius + 2}
+        r={radius}
+        fill={'rgb(235, 91, 93, .5)'}
+        {...props}
+        animatedProps={secondProps}
+      />
     </Svg>
-
-    // <Svg
-    //   height={24}
-    //   width={48}
-    //   {...props}
-    //   viewBox="0 0 48 24"
-    //   style={{ backgroundColor: 'transparent', alignSelf: 'center' }}>
-    //   <Defs>
-    //     <LinearGradient
-    //       id="Gradient"
-    //       gradientUnits="userSpaceOnUse"
-    //       x1="0"
-    //       y1="0"
-    //       x2="800"
-    //       y2="0">
-    //       <Stop offset="0" stopColor="white" stopOpacity="0" />
-    //       <Stop offset="1" stopColor="white" stopOpacity="1" />
-    //     </LinearGradient>
-    //     <Mask
-    //       id="Mask"
-    //       maskUnits="userSpaceOnUse"
-    //       x="0"
-    //       y="0"
-    //       width="800"
-    //       height="300">
-    //       <Rect x="0" y="0" width="800" height="300" fill="url(#Gradient)" />
-    //     </Mask>
-    //     <Circle
-    //       cy={radius + 2}
-    //       r={radius}
-    //       fill={'rgba(91, 232, 235, .5)'}
-    //       {...props}
-    //       animatedProps={firstProps}
-    //     />
-    //   </Defs>
-
-    //   <Circle
-    //     cy={radius + 2}
-    //     r={radius}
-    //     mask="url(#Mask)"
-    //     fill={'rgba(235, 91, 93, .5)'}
-    //     {...props}
-    //     animatedProps={secondProps}
-    //   />
-    // </Svg>
   );
 };
