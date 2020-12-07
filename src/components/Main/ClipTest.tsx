@@ -14,69 +14,40 @@ import Svg, {
   Ellipse,
   Polygon,
 } from 'react-native-svg';
-
+/**
+ * 1/ circle black BG + clip
+ * 2/ red circle
+ * 3/ transparent bg
+ */
 export const ClipTest = () => {
   return (
-    <Svg height={100} width={200} style={{ backgroundColor: '#000' }}>
+    <Svg
+      height={24}
+      width={48}
+      {...props}
+      viewBox="0 0 48 24"
+      style={{ backgroundColor: 'transparent', alignSelf: 'center' }}>
       <Defs>
         <ClipPath id="clip">
           <G opacity="0">
-            <Circle x="15" cx="30" cy="30" r="30" />
-            <Circle x="40" cx="30" cy="30" r="10" />
+            <Circle x="0" cx="30" cy="30" r="30" />
+            <Circle x="0" cx="30" cy="30" r="10" />
           </G>
         </ClipPath>
-
-        <Mask id="mask" maskUnits="userSpaceOnUse">
-          <Circle x="40" cx="30" cy="30" r="10" fill="red" />
-        </Mask>
-
-        {/* <ClipPath id="clip2">
-          <G>
-            <Circle x="15" cx="30" cy="30" r="30" />
-            <Circle x="40" cx="30" cy="30" r="10" />
-          </G>
-        </ClipPath> */}
-
-        {/* <Mask id="clip">
-          <Circle fill="green" x="15" cx="30" cy="30" r="10" />
-        </Mask> */}
       </Defs>
 
-      {/* <Circle x="15" cx="30" cy="30" r="30" fill="black" /> */}
+      <Circle x="55" cx="30" cy="30" r="10" fill="rgb(235, 91, 93)" />
 
-      <Rect
-        id="Text"
-        x="0"
-        y="0"
-        width="100%"
-        height="100%"
-        fill="green"
+      <Circle x="15" cx="30" cy="30" r="30" fill="#000" />
+
+      <Circle
+        x="15"
+        cx="30"
+        cy="30"
+        r="30"
+        fill="rgb(91, 232, 235)"
         clipPath="url(#clip)"
-        clipRule="nonzero"
       />
-
-      {/* <Use href="#Text" fill="blue" mask="url(#mask)" /> */}
-
-      {/* <Circle x="40" cx="30" cy="30" r="10" fill="red" /> */}
-
-      {/* <Rect
-        x="0"
-        y="0"
-        width="100%"
-        height="100%"
-        fill="red"
-        clipPath="url(#clip2)"
-        clipRule="evenodd"
-      /> */}
-
-      {/* <Rect
-        x="0"
-        y="0"
-        width="100%"
-        height="100%"
-        fill="red"
-        clipPath="url(#clip)"
-      /> */}
     </Svg>
   );
 };

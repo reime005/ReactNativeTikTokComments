@@ -8,7 +8,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import Svg, { Circle as C } from 'react-native-svg';
+import Svg, { Circle as C, ClipPath, Defs, G } from 'react-native-svg';
 import { useTheme } from 'styled-components';
 
 const Circle = Animated.createAnimatedComponent(C);
@@ -109,10 +109,37 @@ export const Spinner = (props: Props) => {
       {...props}
       viewBox="0 0 48 24"
       style={{ backgroundColor: 'transparent', alignSelf: 'center' }}>
+      <Defs>
+        <ClipPath id="clip">
+          <G>
+            <Circle
+              cy={radius + 2}
+              r={radius}
+              {...props}
+              animatedProps={firstProps}
+            />
+
+            <Circle
+              cy={radius + 2}
+              r={radius}
+              {...props}
+              animatedProps={secondProps}
+            />
+          </G>
+        </ClipPath>
+      </Defs>
+
       <Circle
         cy={radius + 2}
         r={radius}
-        fill={'rgba(91, 232, 235, .5)'}
+        fill={'rgb(235, 91, 93)'}
+        {...props}
+        animatedProps={secondProps}
+      />
+
+      <Circle
+        cy={radius + 2}
+        fill={'#000'}
         {...props}
         animatedProps={firstProps}
       />
@@ -120,9 +147,10 @@ export const Spinner = (props: Props) => {
       <Circle
         cy={radius + 2}
         r={radius}
-        fill={'rgb(235, 91, 93, .5)'}
+        fill={'rgb(91, 232, 235)'}
+        clipPath="url(#clip)"
         {...props}
-        animatedProps={secondProps}
+        animatedProps={firstProps}
       />
     </Svg>
   );
