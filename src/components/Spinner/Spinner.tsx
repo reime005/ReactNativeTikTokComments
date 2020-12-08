@@ -1,72 +1,62 @@
 import React from 'react';
-import * as RN from 'react-native';
 import Animated, {
-  useSharedValue,
-  useAnimatedProps,
-  withTiming,
-  interpolateNode,
   interpolate,
-  useAnimatedStyle,
+  useAnimatedProps,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
 } from 'react-native-reanimated';
-import Svg, { Circle as C, ClipPath, Defs, G } from 'react-native-svg';
-import { useTheme } from 'styled-components';
+import Svg, { Defs, Circle as C, ClipPath, G } from 'react-native-svg';
 
 const Circle = Animated.createAnimatedComponent(C);
 
-const radius = 10;
-
-const DISTANCE = 10;
-const SPEED_FACTOR = 0.05;
-
-const MAX_SCALE = 1;
-const MIN_SCALE = 0.5;
+const SPEED_FACTOR = 0.2;
+const RADIUS = 30;
 
 const initialPositions = {
-  first: radius + radius * 0.2,
-  second: radius * 3 + radius * 0.2,
+  first: RADIUS + RADIUS * 0.2,
+  second: RADIUS * 3 + RADIUS * 0.2,
 };
 
-interface Props {
-  height?: string | number;
-  width?: string | number;
-  fill?: string;
-  style?: RN.ViewStyle;
+interface SpinnerProps {
+  backgroundColor?: string;
+  firstColor?: string;
+  secondColor?: string;
+  speedMS?: number;
 }
 
-export const Spinner = (props: Props) => {
-  const { mainFont: fill } = useTheme();
+const defaultProps: SpinnerProps = {
+  backgroundColor: '#303030',
+  firstColor: 'rgb(235, 91, 93)',
+  secondColor: 'rgb(91, 232, 235)',
+  speedMS: 1000,
+};
 
-  const frameRef = React.useRef<any>(null);
-  const currTime = useSharedValue(0);
+export const Spinner = (p: SpinnerProps) => {
+  const props = { ...defaultProps, ...p };
 
-  const firstRadius = useSharedValue(radius);
-  const secondRadius = useSharedValue(radius);
+  const currTime = useSharedValue(1);
 
   const x = {
     first: useSharedValue(initialPositions.first),
     second: useSharedValue(initialPositions.second),
   };
 
-  const firstProps = useAnimatedProps(() => {
-    const s = Math.sin(currTime.value);
+  const radius = {
+    first: useSharedValue(RADIUS),
+    second: useSharedValue(RADIUS),
+  };
 
-    x.first.value = interpolate(
-      s,
-      [-1, 1],
-      [initialPositions.first, initialPositions.second],
+  React.useEffect(() => {
+    currTime.value = withRepeat(
+      withSequence(
+        withTiming(-1, { duration: props.speedMS }),
+        withTiming(1, { duration: props.speedMS }),
+      ),
+      -1,
     );
-
-    firstRadius.value = interpolate(
-      s,
-      [-1, -0.7, 0, 0.7, 1],
-      [radius * 0.8, radius * 0.9, radius * 1.1, radius * 0.9, radius * 0.8],
-    );
-
-    return {
-      cx: x.first.value,
-      r: firstRadius.value,
-    };
-  });
+  }, []);
 
   const secondProps = useAnimatedProps(() => {
     const s = Math.sin(currTime.value);
@@ -77,68 +67,90 @@ export const Spinner = (props: Props) => {
       [initialPositions.first, initialPositions.second],
     );
 
-    secondRadius.value = interpolate(
+    radius.second.value = interpolate(
       s,
-      [-1, -0.5, 0, 0.5, 1],
-      [radius * 1, radius * 0.3, radius * 0.3, radius * 0.3, radius * 1],
+      [-1, -0.6, 0, 0.6, 1],
+      [RADIUS * 1, RADIUS * 0.6, RADIUS * 0.4, RADIUS * 0.6, RADIUS * 1],
     );
 
     return {
       cx: x.second.value,
-      r: secondRadius.value,
+      r: radius.second.value,
     };
   });
 
-  const s2 = secondProps;
+  const secondProps2 = useAnimatedProps(() => {
+    return {
+      cx: x.second.value,
+      r: radius.second.value,
+    };
+  });
 
-  const req = React.useCallback(() => {
-    // x.second.value = radius * 2 + radius * Math.sin(currTime.value - 1);
-    currTime.value = currTime.value + SPEED_FACTOR;
+  const firstProps = useAnimatedProps(() => {
+    const s = Math.sin(currTime.value);
 
-    frameRef.current = requestAnimationFrame(req);
-  }, [x, currTime]);
+    x.first.value = interpolate(
+      s,
+      [-1, 1],
+      [initialPositions.first, initialPositions.second],
+    );
 
-  React.useEffect(() => {
-    req();
+    radius.first.value = interpolate(
+      s,
+      [-1, -0.65, 0, 0.65, 1],
+      [RADIUS * 1, RADIUS * 1.1, RADIUS * 1.3, RADIUS * 1.1, RADIUS * 1],
+    );
 
-    return () => cancelAnimationFrame(frameRef.current);
-  }, [req]);
+    return {
+      cx: x.first.value,
+      r: radius.first.value,
+    };
+  });
+
+  const firstProps2 = useAnimatedProps(() => {
+    return {
+      cx: x.first.value,
+      r: radius.first.value,
+    };
+  });
+
+  const firstProps3 = useAnimatedProps(() => {
+    return {
+      cx: x.first.value,
+      r: radius.first.value,
+    };
+  });
 
   return (
     <Svg
-      height={24}
-      width={48}
+      height={80}
+      width={130}
       {...props}
-      viewBox="0 0 48 24"
-      style={{ backgroundColor: '#ccc', alignSelf: 'center' }}>
+      viewBox="0 0 130 80"
+      style={{ backgroundColor: props.backgroundColor, alignSelf: 'center' }}>
       <Defs>
         <ClipPath id="clip">
-          <G>
-            <Circle x="0" cx="30" cy="30" r="30" />
-            <Circle x="0" cx="30" cy="30" r="10" />
-          </G>
+          <Circle cx={RADIUS} cy={RADIUS * 1.3} animatedProps={firstProps3} />
+          <Circle cx={RADIUS} cy={RADIUS * 1.3} animatedProps={secondProps} />
         </ClipPath>
       </Defs>
 
-      {/* <Circle
-        cy={radius + 2}
-        fill={'rgb(235, 91, 93)'}
-        {...props}
-        animatedProps={secondProps}
-      /> */}
-
-      {/* <Circle
-        cy={radius + 2}
-        fill={'#000'}
-        {...props}
-        animatedProps={firstProps}
-      /> */}
+      <Circle
+        cy={RADIUS * 1.3}
+        fill={props.firstColor}
+        animatedProps={secondProps2}
+      />
 
       <Circle
-        cy={radius + 2}
+        cy={RADIUS * 1.3}
+        fill={props.backgroundColor}
+        animatedProps={firstProps2}
+      />
+
+      <Circle
+        cy={RADIUS * 1.3}
+        fill={props.secondColor}
         clipPath="url(#clip)"
-        fill={'rgb(91, 232, 235)'}
-        {...props}
         animatedProps={firstProps}
       />
     </Svg>

@@ -27,10 +27,10 @@ export const Main = () => {
                 justifyContent: 'center',
                 padding: 16,
               }}>
-              {/* <CommentsSection /> */}
+              <CommentsSection />
               {/* <Test /> */}
               {/* <MaskTest /> */}
-              <ClipTest />
+              {/* <ClipTest /> */}
               {/* <Spinner /> */}
             </View>
           </SafeAreaView>

@@ -84,7 +84,7 @@ export const CommentsSection = () => {
 
             <FlatList
               ref={animRef}
-              data={Array.from({ length: 20 }).map((_, i) => i)}
+              data={Array.from({ length: 300 }).map((_, i) => i)}
               keyExtractor={(item) => item}
               renderItem={(item) => <CommentsItem key={item.index} />}
               onContentSizeChange={(_, h) => (contentHeight.value = h)}

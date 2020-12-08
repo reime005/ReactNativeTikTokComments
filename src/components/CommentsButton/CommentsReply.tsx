@@ -5,6 +5,7 @@ import {
   Transitioning,
   TransitioningView,
 } from 'react-native-reanimated';
+import { useTheme } from 'styled-components';
 import { Spinner } from '../Spinner/Spinner';
 import { ChevronIcon } from '../SVG/ChevronIcon';
 import { SVGWrapperProps } from '../SVG/svgProps';
@@ -75,6 +76,8 @@ const ReplyItems = (props: ViewReplyProps) => {
 };
 
 const ViewReply = (props: ViewReplyProps) => {
+  const theme = useTheme();
+
   return (
     <S.StyledCommentsReplyHeader activeOpacity={0.9} onPress={props.onPress}>
       <StyledCommentsItemTextSecondary>
