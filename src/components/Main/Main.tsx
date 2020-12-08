@@ -30,8 +30,8 @@ export const Main = () => {
               {/* <CommentsSection /> */}
               {/* <Test /> */}
               {/* <MaskTest /> */}
-              {/* <ClipTest /> */}
-              <Spinner />
+              <ClipTest />
+              {/* <Spinner /> */}
             </View>
           </SafeAreaView>
         </SafeAreaProvider>

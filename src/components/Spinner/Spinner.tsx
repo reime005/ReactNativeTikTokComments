@@ -80,7 +80,7 @@ export const Spinner = (props: Props) => {
     secondRadius.value = interpolate(
       s,
       [-1, -0.5, 0, 0.5, 1],
-      [radius * 0.8, radius * 0.8, radius * 0.5, radius * 0.8, radius * 0.8],
+      [radius * 1, radius * 0.3, radius * 0.3, radius * 0.3, radius * 1],
     );
 
     return {
@@ -88,6 +88,8 @@ export const Spinner = (props: Props) => {
       r: secondRadius.value,
     };
   });
+
+  const s2 = secondProps;
 
   const req = React.useCallback(() => {
     // x.second.value = radius * 2 + radius * Math.sin(currTime.value - 1);
@@ -108,47 +110,34 @@ export const Spinner = (props: Props) => {
       width={48}
       {...props}
       viewBox="0 0 48 24"
-      style={{ backgroundColor: 'transparent', alignSelf: 'center' }}>
+      style={{ backgroundColor: '#ccc', alignSelf: 'center' }}>
       <Defs>
         <ClipPath id="clip">
           <G>
-            <Circle
-              cy={radius + 2}
-              r={radius}
-              {...props}
-              animatedProps={firstProps}
-            />
-
-            <Circle
-              cy={radius + 2}
-              r={radius}
-              {...props}
-              animatedProps={secondProps}
-            />
+            <Circle x="0" cx="30" cy="30" r="30" />
+            <Circle x="0" cx="30" cy="30" r="10" />
           </G>
         </ClipPath>
       </Defs>
 
-      <Circle
+      {/* <Circle
         cy={radius + 2}
-        r={radius}
         fill={'rgb(235, 91, 93)'}
         {...props}
         animatedProps={secondProps}
-      />
+      /> */}
 
-      <Circle
+      {/* <Circle
         cy={radius + 2}
         fill={'#000'}
         {...props}
         animatedProps={firstProps}
-      />
+      /> */}
 
       <Circle
         cy={radius + 2}
-        r={radius}
-        fill={'rgb(91, 232, 235)'}
         clipPath="url(#clip)"
+        fill={'rgb(91, 232, 235)'}
         {...props}
         animatedProps={firstProps}
       />
