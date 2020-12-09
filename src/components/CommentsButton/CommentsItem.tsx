@@ -9,34 +9,43 @@ interface Props {}
 
 export const CommentsItem = (props: Props) => {
   return (
-    <S.StyledCommentsItem>
-      <S.StyledCommentsItemEdgeContainer>
-        <S.StyledCommentsItemImage
-          source={require('../../assets/img/profile.jpg')}
-        />
-      </S.StyledCommentsItemEdgeContainer>
+    <>
+      <S.StyledCommentsItem>
+        <S.StyledCommentsItemEdgeContainer>
+          <S.StyledCommentsItemImage
+            source={require('../../assets/img/profile.jpg')}
+          />
+        </S.StyledCommentsItemEdgeContainer>
 
-      <S.StyledCommentsItemTextContainer>
-        <S.StyledCommentsItemTextSecondary>
-          Title
-        </S.StyledCommentsItemTextSecondary>
-
-        <S.StyledCommentsItemTextPrimary>
-        Secondary test test Secondary test test Secondary test test Secondary test test Secondary test test
+        <S.StyledCommentsItemTextContainer>
           <S.StyledCommentsItemTextSecondary>
-            &nbsp;12h
+            Title
           </S.StyledCommentsItemTextSecondary>
-        </S.StyledCommentsItemTextPrimary>
 
-        <CommentsReply />
-      </S.StyledCommentsItemTextContainer>
+          <S.StyledCommentsItemTextPrimary>
+            Secondary test test Secondary test test Secondary test test
+            Secondary test test Secondary test test
+            <S.StyledCommentsItemTextSecondary>
+              &nbsp;12h
+            </S.StyledCommentsItemTextSecondary>
+          </S.StyledCommentsItemTextPrimary>
+        </S.StyledCommentsItemTextContainer>
 
-      <S.StyledCommentsItemEdgeContainer style={{ alignItems: 'center' }}>
-        <ToggleIcon First={HeartEmptyIcon} Second={HeartFilledIcon} />
-        <S.StyledCommentsItemTextCompact numberOfLines={1}>
-          42
-        </S.StyledCommentsItemTextCompact>
-      </S.StyledCommentsItemEdgeContainer>
-    </S.StyledCommentsItem>
+        <S.StyledCommentsItemEdgeContainer style={{ alignItems: 'center' }}>
+          <ToggleIcon First={HeartEmptyIcon} Second={HeartFilledIcon} />
+          <S.StyledCommentsItemTextCompact numberOfLines={1}>
+            42
+          </S.StyledCommentsItemTextCompact>
+        </S.StyledCommentsItemEdgeContainer>
+      </S.StyledCommentsItem>
+
+      <S.StyledCommentsItem>
+        <S.StyledCommentsItemEdgeContainer />
+
+        <S.StyledCommentsItemTextContainer style={{ marginRight: 0 }}>
+          <CommentsReply />
+        </S.StyledCommentsItemTextContainer>
+      </S.StyledCommentsItem>
+    </>
   );
 };

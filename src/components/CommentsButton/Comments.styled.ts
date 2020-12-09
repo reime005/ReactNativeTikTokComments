@@ -1,9 +1,10 @@
-import styled from "styled-components/native";
+import styled from 'styled-components/native';
 
 export const StyledCommentsItem = styled.View`
   flex-direction: row;
-  min-height: 80px;
-  margin-bottom: 16px;
+  /* min-height: 80px; */
+  margin-bottom: 8px;
+  width: 100%;
 `;
 
 export const StyledCommentsItemEdgeContainer = styled.View`
@@ -45,6 +46,8 @@ export const StyledCommentsItemTextSecondary = styled.Text`
   color: ${({ theme }) => theme.secondaryFont};
 `;
 
-export const StyledCommentsItemTextCompact = styled(StyledCommentsItemTextSecondary)`
+export const StyledCommentsItemTextCompact = styled(
+  StyledCommentsItemTextSecondary,
+)`
   line-height: 18px;
 `;

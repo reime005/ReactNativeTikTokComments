@@ -11,7 +11,8 @@ import Svg, { Defs, Circle as C, ClipPath, G } from 'react-native-svg';
 
 const Circle = Animated.createAnimatedComponent(C);
 
-const SPEED_FACTOR = 0.2;
+const SVG_HEIGHT = 80;
+const SVG_WIDTH = 130;
 const RADIUS = 30;
 
 const initialPositions = {
@@ -24,6 +25,7 @@ interface SpinnerProps {
   firstColor?: string;
   secondColor?: string;
   speedMS?: number;
+  height?: number;
 }
 
 const defaultProps: SpinnerProps = {
@@ -31,6 +33,7 @@ const defaultProps: SpinnerProps = {
   firstColor: 'rgb(235, 91, 93)',
   secondColor: 'rgb(91, 232, 235)',
   speedMS: 1000,
+  height: SVG_HEIGHT,
 };
 
 export const Spinner = (p: SpinnerProps) => {
@@ -97,8 +100,8 @@ export const Spinner = (p: SpinnerProps) => {
 
     radius.first.value = interpolate(
       s,
-      [-1, -0.65, 0, 0.65, 1],
-      [RADIUS * 1, RADIUS * 1.1, RADIUS * 1.3, RADIUS * 1.1, RADIUS * 1],
+      [-1, -0.6, 0, 0.6, 1],
+      [RADIUS * 0.8, RADIUS * 1, RADIUS * 1.2, RADIUS * 1, RADIUS * 0.8],
     );
 
     return {
@@ -123,32 +126,33 @@ export const Spinner = (p: SpinnerProps) => {
 
   return (
     <Svg
-      height={80}
-      width={130}
+      height={props.height}
+      width={
+        SVG_WIDTH *
+        ((props.height || SVG_HEIGHT) / (defaultProps.height || SVG_HEIGHT))
+      }
       {...props}
-      viewBox="0 0 130 80"
+      viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`}
       style={{ backgroundColor: props.backgroundColor, alignSelf: 'center' }}>
       <Defs>
         <ClipPath id="clip">
-          <Circle cx={RADIUS} cy={RADIUS * 1.3} animatedProps={firstProps3} />
-          <Circle cx={RADIUS} cy={RADIUS * 1.3} animatedProps={secondProps} />
+          <G opacity="0">
+            <Circle cx={RADIUS} cy="40" animatedProps={firstProps3} />
+            <Circle cx={RADIUS} cy="40" animatedProps={secondProps} />
+          </G>
         </ClipPath>
       </Defs>
 
-      <Circle
-        cy={RADIUS * 1.3}
-        fill={props.firstColor}
-        animatedProps={secondProps2}
-      />
+      <Circle cy="40" fill={props.firstColor} animatedProps={secondProps2} />
 
       <Circle
-        cy={RADIUS * 1.3}
+        cy="40"
         fill={props.backgroundColor}
         animatedProps={firstProps2}
       />
 
       <Circle
-        cy={RADIUS * 1.3}
+        cy="40"
         fill={props.secondColor}
         clipPath="url(#clip)"
         animatedProps={firstProps}

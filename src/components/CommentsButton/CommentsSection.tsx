@@ -29,6 +29,10 @@ export const CommentsSection = () => {
     contentHeight,
   } = useCommentsSection();
 
+  React.useEffect(() => {
+    openAnim();
+  }, []);
+
   return (
     <>
       <SpeakerIcon

@@ -1,15 +1,14 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, FlatList } from 'react-native';
 import {
   Transition,
   Transitioning,
   TransitioningView,
 } from 'react-native-reanimated';
-import { useTheme } from 'styled-components';
 import { Spinner } from '../Spinner/Spinner';
 import { ChevronIcon } from '../SVG/ChevronIcon';
-import { SVGWrapperProps } from '../SVG/svgProps';
 import { StyledCommentsItemTextSecondary } from './Comments.styled';
+import { CommentsItem } from './CommentsItem';
 
 import * as S from './CommentsReply.styled';
 
@@ -18,7 +17,7 @@ interface Props {}
 export const CommentsReply = () => {
   const ref = React.useRef<TransitioningView | null>(null);
 
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [open, setOpen] = React.useState(false);
   const toggleOpen = () => setOpen(!open);
@@ -39,7 +38,10 @@ export const CommentsReply = () => {
   };
 
   return (
-    <Transitioning.View ref={ref} transition={transition}>
+    <Transitioning.View
+      ref={ref}
+      transition={transition}
+      style={{ width: '100%' }}>
       {!open && <ViewReply onPress={onPress} isLoading={isLoading} />}
       {open && <ReplyItems onPress={onPress} isLoading={isLoading} />}
     </Transitioning.View>
@@ -60,15 +62,22 @@ const ReplyItems = (props: ViewReplyProps) => {
       style={{
         alignItems: 'center',
         justifyContent: 'flex-end',
-        width: '100%',
-        height: 250,
       }}>
       <S.StyledCommentsReplyHeader
         style={{ width: '100%' }}
         activeOpacity={0.9}
         onPress={props.onPress}>
+        <FlatList
+          style={{ width: '100%' }}
+          data={Array.from({ length: 300 }).map((_, i) => i)}
+          keyExtractor={(item) => item}
+          renderItem={(item) => <CommentsItem key={item.index} />}
+          scrollEnabled={false}
+          scrollEventThrottle={16}
+        />
+
         <StyledCommentsItemTextSecondary>
-          View replies (42) <ChevronIcon rotateByDeg={90} />
+          Hide <ChevronIcon rotateByDeg={90} />
         </StyledCommentsItemTextSecondary>
       </S.StyledCommentsReplyHeader>
     </View>
@@ -76,15 +85,13 @@ const ReplyItems = (props: ViewReplyProps) => {
 };
 
 const ViewReply = (props: ViewReplyProps) => {
-  const theme = useTheme();
-
   return (
     <S.StyledCommentsReplyHeader activeOpacity={0.9} onPress={props.onPress}>
       <StyledCommentsItemTextSecondary>
         View replies (42) <ChevronIcon rotateByDeg={-90} />
       </StyledCommentsItemTextSecondary>
 
-      {props.isLoading && <Spinner />}
+      {props.isLoading && <Spinner height={20} />}
     </S.StyledCommentsReplyHeader>
   );
 };
