@@ -6,5 +6,5 @@
 
 ## TikTok Comments Section
 
-![](./.github/app-preview.gif)
+![](./.github/comments-preview.gif)
 

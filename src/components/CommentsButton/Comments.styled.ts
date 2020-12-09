@@ -32,14 +32,14 @@ export const StyledCommentsItemImage = styled.Image<{ size?: number }>`
 `;
 
 export const StyledCommentsItemTextPrimary = styled.Text`
-  font-size: 18px;
+  font-size: 17px;
   line-height: 26px;
   font-weight: 400;
   color: ${({ theme }) => theme.mainFont};
 `;
 
 export const StyledCommentsItemTextSecondary = styled.Text`
-  font-size: 14px;
+  font-size: 13px;
   line-height: 24px;
   font-weight: 500;
   color: ${({ theme }) => theme.secondaryFont};

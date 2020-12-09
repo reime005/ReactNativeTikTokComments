@@ -73,7 +73,7 @@ export const CommentsSection = () => {
                     lineHeight: 14,
                     color: 'white',
                   }}>
-                  253 comments
+                  32 comments
                 </RN.Text>
               </RN.View>
 
@@ -88,7 +88,7 @@ export const CommentsSection = () => {
 
             <FlatList
               ref={animRef}
-              data={Array.from({ length: 30 }).map((_, i) => i)}
+              data={Array.from({ length: 32 }).map((_, i) => i)}
               keyExtractor={(item) => String(item)}
               renderItem={(item) => (
                 <CommentsItem
