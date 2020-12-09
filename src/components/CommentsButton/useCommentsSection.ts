@@ -79,17 +79,7 @@ export const useCommentsSection = () => {
         return;
       }
     },
-    onEnd: function (evt) {
-      // let newVal = scrollOffset.value + (-1 * evt.velocityY) / 15;
-
-      // if (newVal < 0) {
-      //   newVal = 0;
-      // } else if (newVal > contentHeight.value) {
-      //   newVal = contentHeight.value;
-      // }
-
-      // scrollOffsetEnd.value = newVal;
-
+    onEnd: function () {
       handleDragEndEvent();
     },
     onStart: (evt, ctx) => {
