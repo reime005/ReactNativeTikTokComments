@@ -2,8 +2,7 @@ import styled from 'styled-components/native';
 
 export const StyledCommentsItem = styled.View`
   flex-direction: row;
-  /* min-height: 80px; */
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   width: 100%;
 `;
 
@@ -11,7 +10,7 @@ export const StyledCommentsItemEdgeContainer = styled.View`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
-  min-width: 30px;
+  width: 40px;
 `;
 
 export const StyledCommentsItemTextContainer = styled.View`
@@ -23,7 +22,7 @@ export const StyledCommentsItemTextContainer = styled.View`
   flex: 1;
 `;
 
-const DEFAULT_IMAGE_SIZE = 45;
+const DEFAULT_IMAGE_SIZE = 35;
 
 export const StyledCommentsItemImage = styled.Image<{ size?: number }>`
   width: ${({ size = DEFAULT_IMAGE_SIZE }) => `${size}px`};

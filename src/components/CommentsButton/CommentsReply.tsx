@@ -63,19 +63,27 @@ const ReplyItems = (props: ViewReplyProps) => {
         alignItems: 'center',
         justifyContent: 'flex-end',
       }}>
+      <FlatList
+        style={{ width: '100%' }}
+        data={Array.from({ length: 5 }).map((_, i) => i)}
+        keyExtractor={(item) => String(item)}
+        renderItem={(item) => (
+          <CommentsItem
+            key={item.index}
+            comment="I'm a reply to a comment"
+            profileSource={require('../../assets/img/profile.jpg')}
+            timestamp="5h"
+            title="commentor"
+          />
+        )}
+        scrollEnabled={false}
+        scrollEventThrottle={16}
+      />
+
       <S.StyledCommentsReplyHeader
         style={{ width: '100%' }}
         activeOpacity={0.9}
         onPress={props.onPress}>
-        <FlatList
-          style={{ width: '100%' }}
-          data={Array.from({ length: 300 }).map((_, i) => i)}
-          keyExtractor={(item) => item}
-          renderItem={(item) => <CommentsItem key={item.index} />}
-          scrollEnabled={false}
-          scrollEventThrottle={16}
-        />
-
         <StyledCommentsItemTextSecondary>
           Hide <ChevronIcon rotateByDeg={90} />
         </StyledCommentsItemTextSecondary>
@@ -86,13 +94,17 @@ const ReplyItems = (props: ViewReplyProps) => {
 
 const ViewReply = (props: ViewReplyProps) => {
   return (
-    <S.StyledCommentsReplyHeader activeOpacity={0.9} onPress={props.onPress}>
-      <StyledCommentsItemTextSecondary>
-        View replies (42) <ChevronIcon rotateByDeg={-90} />
-      </StyledCommentsItemTextSecondary>
+    <>
+      <S.StyledCommentsReplyHeader activeOpacity={0.9} onPress={props.onPress}>
+        <StyledCommentsItemTextSecondary>
+          View replies (42)
+        </StyledCommentsItemTextSecondary>
+
+        <ChevronIcon rotateByDeg={-90} />
+      </S.StyledCommentsReplyHeader>
 
       {props.isLoading && <Spinner height={20} />}
-    </S.StyledCommentsReplyHeader>
+    </>
   );
 };
 

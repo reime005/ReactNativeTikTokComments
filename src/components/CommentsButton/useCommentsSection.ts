@@ -31,6 +31,7 @@ export const useCommentsSection = () => {
 
   const contentHeight = useSharedValue(0);
   const scrollOffset = useSharedValue(0);
+  const scrollOffsetEnd = useSharedValue(0);
 
   const closeAnim = () => {
     'worklet';
@@ -78,7 +79,17 @@ export const useCommentsSection = () => {
         return;
       }
     },
-    onEnd: function () {
+    onEnd: function (evt) {
+      // let newVal = scrollOffset.value + (-1 * evt.velocityY) / 15;
+
+      // if (newVal < 0) {
+      //   newVal = 0;
+      // } else if (newVal > contentHeight.value) {
+      //   newVal = contentHeight.value;
+      // }
+
+      // scrollOffsetEnd.value = newVal;
+
       handleDragEndEvent();
     },
     onStart: (evt, ctx) => {
@@ -90,6 +101,10 @@ export const useCommentsSection = () => {
     return {
       bottom: bottom.value,
     };
+  });
+
+  useDerivedValue<any>(() => {
+    scrollTo(animRef, 0, scrollOffsetEnd.value, true);
   });
 
   useDerivedValue<any>(() => {

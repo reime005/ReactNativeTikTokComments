@@ -88,9 +88,18 @@ export const CommentsSection = () => {
 
             <FlatList
               ref={animRef}
-              data={Array.from({ length: 300 }).map((_, i) => i)}
-              keyExtractor={(item) => item}
-              renderItem={(item) => <CommentsItem key={item.index} />}
+              data={Array.from({ length: 30 }).map((_, i) => i)}
+              keyExtractor={(item) => String(item)}
+              renderItem={(item) => (
+                <CommentsItem
+                  key={item.index}
+                  showReply={item.index === 1}
+                  comment="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit quia ipsam reiciendis, omnis rerum numquam fugiat."
+                  profileSource={require('../../assets/img/profile.jpg')}
+                  timestamp="12h"
+                  title="reime005"
+                />
+              )}
               onContentSizeChange={(_, h) => (contentHeight.value = h)}
               scrollEnabled={false}
               scrollEventThrottle={16}

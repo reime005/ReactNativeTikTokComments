@@ -28,6 +28,8 @@ export const SVGWrapper = (props: SVGWrapperProps) => {
                   rotate: `${props.rotateByDeg}deg`,
                 },
               ],
+              alignItems: 'center',
+              justifyContent: 'center',
             }
           : {}),
       },

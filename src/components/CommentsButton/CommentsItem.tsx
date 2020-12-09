@@ -1,32 +1,38 @@
 import React from 'react';
+import { ImageSourcePropType } from 'react-native';
 import { HeartEmptyIcon } from '../SVG/HeartEmptyIcon';
 import { HeartFilledIcon } from '../SVG/HeartFilledIcon';
 import * as S from './Comments.styled';
 import { CommentsReply } from './CommentsReply';
 import { ToggleIcon } from './ToggleIcon';
 
-interface Props {}
+interface Props {
+  title: string;
+  comment: string;
+  timestamp: string;
+  profileSource: ImageSourcePropType;
+  showReply?: boolean;
+}
 
 export const CommentsItem = (props: Props) => {
+  const { title, comment, profileSource, timestamp, showReply } = props;
+
   return (
     <>
       <S.StyledCommentsItem>
         <S.StyledCommentsItemEdgeContainer>
-          <S.StyledCommentsItemImage
-            source={require('../../assets/img/profile.jpg')}
-          />
+          <S.StyledCommentsItemImage source={profileSource} />
         </S.StyledCommentsItemEdgeContainer>
 
         <S.StyledCommentsItemTextContainer>
           <S.StyledCommentsItemTextSecondary>
-            Title
+            {title}
           </S.StyledCommentsItemTextSecondary>
 
           <S.StyledCommentsItemTextPrimary>
-            Secondary test test Secondary test test Secondary test test
-            Secondary test test Secondary test test
+            {comment}
             <S.StyledCommentsItemTextSecondary>
-              &nbsp;12h
+              &nbsp;{timestamp}
             </S.StyledCommentsItemTextSecondary>
           </S.StyledCommentsItemTextPrimary>
         </S.StyledCommentsItemTextContainer>
@@ -34,18 +40,20 @@ export const CommentsItem = (props: Props) => {
         <S.StyledCommentsItemEdgeContainer style={{ alignItems: 'center' }}>
           <ToggleIcon First={HeartEmptyIcon} Second={HeartFilledIcon} />
           <S.StyledCommentsItemTextCompact numberOfLines={1}>
-            42
+            5
           </S.StyledCommentsItemTextCompact>
         </S.StyledCommentsItemEdgeContainer>
       </S.StyledCommentsItem>
 
-      <S.StyledCommentsItem>
-        <S.StyledCommentsItemEdgeContainer />
+      {showReply && (
+        <S.StyledCommentsItem>
+          <S.StyledCommentsItemEdgeContainer />
 
-        <S.StyledCommentsItemTextContainer style={{ marginRight: 0 }}>
-          <CommentsReply />
-        </S.StyledCommentsItemTextContainer>
-      </S.StyledCommentsItem>
+          <S.StyledCommentsItemTextContainer style={{ marginRight: 0 }}>
+            <CommentsReply />
+          </S.StyledCommentsItemTextContainer>
+        </S.StyledCommentsItem>
+      )}
     </>
   );
 };

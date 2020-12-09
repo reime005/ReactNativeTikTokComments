@@ -6,5 +6,7 @@ import { SVGWrapper } from './SVGWrapper';
 
 export const ChevronIcon = (props: SVGWrapperProps) => {
   const { secondaryFont } = useTheme();
-  return <SVGWrapper fill="transparent" color={secondaryFont} {...props} SVG={SVG} />;
+  return (
+    <SVGWrapper fill="transparent" color={secondaryFont} {...props} SVG={SVG} />
+  );
 };
